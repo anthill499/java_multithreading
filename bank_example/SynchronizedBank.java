@@ -21,15 +21,13 @@ class SynchronizedBank {
         // Create runnables
         Runnable runnableA = () -> {
             for (int i = 0; i < 5; i++) {
-                // System.out.println(Thread.currentThread().getName());
-                getAccount().withdrawSynchronized(personA, 25);
+                getAccount().withdrawSynchronized(personA, 50);
             }
         };
 
         Runnable runnableB = () -> {
             for (int i = 0; i < 5; i++) {
-                // System.out.println(Thread.currentThread().getName());
-                getAccount().withdrawSynchronized(personB, 25);
+                getAccount().withdrawSynchronized(personB, 50);
             }
         };
 
