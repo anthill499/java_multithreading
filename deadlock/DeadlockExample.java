@@ -1,3 +1,4 @@
+package deadlock;
 
 public class DeadlockExample {
     public static void main(String[] args) {

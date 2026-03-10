@@ -1,3 +1,6 @@
+package deadlock;
+import resource.Resource;
+
 class Deadlocker {
     private Resource resourceA = new Resource(10);
     private Resource resourceB = new Resource(5);
