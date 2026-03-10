@@ -2,7 +2,6 @@ package deadlock;
 
 public class DeadlockExample {
     public static void main(String[] args) {
-
         Deadlocker deadlocker = new Deadlocker();
 
         Thread threadA = new Thread(() -> {
