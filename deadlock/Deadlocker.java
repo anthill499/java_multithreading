@@ -10,7 +10,7 @@ class Deadlocker {
             try { Thread.sleep(100); } catch(Exception e) {}
             synchronized(resourceB) {
                 System.out.println(Thread.currentThread().getName() + " locked resourceB");
-                return resourceA.value + resourceB.value;
+                return resourceA.getValue() + resourceB.getValue();
             }
         }
     }
@@ -21,8 +21,8 @@ class Deadlocker {
             try { Thread.sleep(100); } catch(Exception e) {}
             synchronized(resourceA) {
                 System.out.println(Thread.currentThread().getName() + " locked resourceA");
-                resourceA.value = a;
-                resourceB.value = b;
+                resourceA.setValue(a);
+                resourceB.setValue(b);
             }
         }
     }

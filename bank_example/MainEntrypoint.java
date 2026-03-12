@@ -1,3 +1,4 @@
+import java.lang.Thread;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 public class MainEntrypoint {
@@ -12,6 +13,7 @@ public class MainEntrypoint {
         NonsynchronizedBank bank = new NonsynchronizedBank();
         bank.demo();
     }
+    
     public static void startSynchronizedScenario() {
         Thread.currentThread().setName("main-synchronized");
         LOGGER.log(Level.INFO, Thread.currentThread().getName());
