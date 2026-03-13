@@ -28,6 +28,10 @@ class Restaurant {
         return orderQueue.isEmpty();
     }
 
+    public boolean isAtCapacity() {
+        return orderQueue.size() >= CAPACITY;
+    }
+
     public void addOrder(Order order) {
         orderQueue.add(order);
     }
