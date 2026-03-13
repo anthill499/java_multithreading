@@ -11,10 +11,11 @@ Restaurant cooks
 Order completed
       ↓
 Driver picks up
-*/ 
+*/
 
 public class Entrypoint {
-    public static void main(String[] args) {
-
-    } 
+      public static void main(String[] args) {
+            DriverQueue driverQueue = new DriverQueue();
+            Restaurant restaurant = new Restaurant();
+      }
 }
