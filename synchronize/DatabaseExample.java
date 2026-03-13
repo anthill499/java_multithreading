@@ -18,6 +18,7 @@ class DatabaseExample {
         return key;
     }
     
+    // Monitor lock of Database Example
     public synchronized void addRecord(String key) {
         logInfo(String.format(" in %s with key %s", Thread.currentThread().getStackTrace()[1].getMethodName(), key));
 
@@ -25,6 +26,7 @@ class DatabaseExample {
             logInfo(String.format(" key %s already exists in db", key));
             return;
         }
+        logInfo(String.format(" Successfully added key %s", key));
         getRecords().add(key);
     }
 
@@ -34,6 +36,7 @@ class DatabaseExample {
             logInfo(String.format(" key %s does not exist in db", key));
             return;
         }
+        logInfo(String.format(" Successfully removed key %s", key));
         getRecords().remove(key);
     }
 
