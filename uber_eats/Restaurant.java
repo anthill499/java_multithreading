@@ -1,51 +1,65 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/*
+ * Thread A. 
+ * continuously poll order queue for any orders and sending them to driver queue 
+ */
 class Restaurant {
     private static final Logger logger = Logger.getLogger(Restaurant.class.getName());
-    private final Deque<Order> orderQueue = new ArrayDeque<>(); // Sequential order flow
-    private static final int CAPACITY = 16;
-    private final Thread rt;
-
+    private final OrderQueue orderQueue;
+    private final CompletedOrderQueue corq;
+    
     public Restaurant() {
-        rt = new Thread();
-        rt.setName("Restaurant Thread");
+        orderQueue = new OrderQueue(16);
+        corq = new CompletedOrderQueue();
+    }
+
+    public void start() {
+        Thread rt = new Thread(() -> {
+            while (true) {
+                synchronized(orderQueue) {
+                    try {
+                        // Empty order queue or at capacity
+                        while (orderQueue.isEmpty()) {
+                            orderQueue.wait();
+                        }
+                    } catch (Exception e) {}
+                }
+                Order order = orderQueue.poll();
+                // Cook the food
+                try {
+                    cook(order.getCookTime());
+                } catch (Exception e) {}
+                
+                // add order to completed order queue
+                dispatchToCorq(order);
+            }
+        });
+        rt.start();
         logger.log(Level.INFO,
                 String.format("🚀 Restaurant is ready to take orders + Restaurant thread!", orderQueue.size()));
     }
-
-    public Deque<Order> getOrderQueue() {
+    
+    public OrderQueue getOrderQueue() {
         return orderQueue;
     }
 
-    public int getCapacity() {
-        return CAPACITY;
+    public CompletedOrderQueue getCorq() {
+        return corq;
     }
 
-    public boolean isEmpty() {
-        return orderQueue.isEmpty();
+    private void dispatchToCorq(Order order) {
+        synchronized(corq) {
+            corq.addOrder(order);
+        }
     }
 
-    public boolean isAtCapacity() {
-        return orderQueue.size() >= CAPACITY;
-    }
-
-    public void addOrder(Order order) {
-        orderQueue.add(order);
-    }
-
-    public void dispatch(Order order) {
-        orderQueue.add(order);
-    }
-
-    public void receiveOrders(int numberOfOrders) {
-        // The main function that takes in number of order stream
-        int ordersLeft = numberOfOrders;
-        while (ordersLeft > 0 || !isEmpty()) {
+    private void cook(int cookingTime) {
+        try {
+            Thread.sleep(cookingTime*1000);
+        } catch (Exception e) {
 
         }
-        logger.log(Level.INFO, String.format("🚀 Restaurant fulfilled %d orders!", numberOfOrders));
     }
 }

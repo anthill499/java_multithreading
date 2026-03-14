@@ -1,23 +1,25 @@
 class Order {
     private final int orderId;
-    private final int timeToCompletion;
-    private final int numItems;
+    private final int cookTime;
+    private final int deliveryTime;
 
-    public Order(int id, int ttc, int itemCount) {
+    public Order(int id, int cookTime, int deliveryTime) {
         orderId = id;
-        timeToCompletion = ttc;
-        numItems = itemCount;
+        this.cookTime = cookTime;
+        this.deliveryTime = deliveryTime;
     }
 
     public int getID() {
         return orderId;
     }
 
-    public int getTTC() {
-        return timeToCompletion;
+    public int getCookTime() {
+        return cookTime;
     }
 
-    public int getItemCount() {
-        return numItems;
+    public int getDeliveryTime() {
+        return deliveryTime;
     }
+
+  
 }
